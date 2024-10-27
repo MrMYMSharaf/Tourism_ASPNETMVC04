@@ -1,0 +1,152 @@
+﻿@model MSTourism.Models.post_tbl
+@if (Session["UserRole"] == null || Session["UserRole"].ToString() != "Admin")
+{
+    <script type="text/javascript">
+        window.location.href = '@Url.Action("Index", "Auth")';
+    </script>
+}
+
+@{
+    ViewBag.Title = "Edit Post";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.FilePath != null)
+{
+    <p class="h2 text-center mt-4">File path: @ViewBag.FilePath</p>
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">Edit Post</h2>
+
+    <div class="card shadow-lg border-primary">
+        <div class="card-body">
+            @using (Html.BeginForm("EditPost", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+            <div class="form-horizontal">
+                <!-- Image Upload Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        <img src="@Url.Content(Session["imgPath"]?.ToString())" width="100" height="70" />
+
+                        <input type="file" id="file" name="file" class="form-control mt-2" />
+                        @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Title...", style = "height: 100px;" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter description...", rows = "4", cols = "50", style = "height: 100px;" } })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Price Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter price...", type = "number", step = "0.01" } })
+                        @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Location Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.location, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.location, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter location..." } })
+                        @Html.ValidationMessageFor(model => model.location, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!-- Start Date Section -->
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.start_date, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.start_date, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                        @Html.ValidationMessageFor(model => model.start_date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    @Html.LabelFor(model => model.end_date, htmlAttributes: new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(model => model.end_date, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                        @Html.ValidationMessageFor(model => model.end_date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <!-- Buttons Section -->
+                <div class="mb-3 row">
+                    <div class="col-sm-offset-2 col-sm-10 text-end">
+                        <input type="submit" value="Save" class="btn btn-success btn-lg me-2 shadow" />
+                        <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg shadow">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Light background for contrast */
+    }
+
+    .card {
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .card-body {
+        padding: 20px; /* Extra padding for content */
+    }
+
+    .btn {
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+        .btn:hover {
+            background-color: #28a745; /* Darker green on hover for the save button */
+            color: white;
+        }
+
+    .btn-secondary:hover {
+        background-color: #6c757d; /* Darker grey on hover for the back button */
+        color: white;
+    }
+
+    .form-control {
+        border: 1px solid #ced4da; /* Light border */
+        border-radius: 5px; /* Slightly rounded inputs */
+    }
+
+        .form-control:focus {
+            border-color: #80bdff; /* Blue border on focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Focus shadow */
+        }
+
+    .text-primary {
+        font-family: 'Arial', sans-serif; /* Modern font for headers */
+        font-weight: bold; /* Bold text for emphasis */
+    }
+</style>

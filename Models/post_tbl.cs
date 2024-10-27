@@ -21,5 +21,6 @@ namespace MSTourism.Models
         public string location { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
+        public string Title { get; set; }
     }
 }

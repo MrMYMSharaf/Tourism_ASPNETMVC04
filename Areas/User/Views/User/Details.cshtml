@@ -1,0 +1,47 @@
+﻿@model MSTourism.Models.post_tbl
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center mb-4">Details</h2>
+
+<div class="container">
+    <div class="card mb-4">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <!-- Display image with Bootstrap's responsive image class -->
+                <img src="@Url.Content(Model.image)" class="img-fluid rounded-start" alt="Image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Title</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@Model.description</dd>
+
+                        <dt class="col-sm-4">Price</dt>
+                        <dd class="col-sm-8">$@Model.price</dd>
+
+                        <dt class="col-sm-4">Location</dt>
+                        <dd class="col-sm-8">@Model.location</dd>
+
+                        <dt class="col-sm-4">Start Date</dt>
+                        <dd class="col-sm-8">@Model.start_date.ToString("MMMM dd, yyyy")</dd>
+
+                        <dt class="col-sm-4">End Date</dt>
+                        <dd class="col-sm-8">@Model.end_date.ToString("MMMM dd, yyyy")</dd>
+                    </dl>
+                    <hr />
+                    <div class="d-flex justify-content-between mt-4">
+                        <!-- Action links as buttons -->
+                        @Html.ActionLink("PayNow", "PayNow", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

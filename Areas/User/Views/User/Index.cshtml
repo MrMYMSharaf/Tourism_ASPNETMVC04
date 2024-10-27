@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MSTourism.Models.post_tbl>
+@{
+    ViewBag.Title = "User Panel";
+    Layout = "~/Areas/User/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="h2 text-center mt-2">User Panel</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <!-- 3 cards per row with Bootstrap's 4-column grid -->
+                <div class="card">
+                    <img src="@Url.Content(item.image)" class="card-img-top h-50 img-rounded" alt="@item.image" style=" object-fit: cover;">
+
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">
+                            @if (item.description.Split(' ').Length > 20)
+                            {
+                                string trimmedDescription = string.Join(" ", item.description.Split(' ').Take(20));
+                                @trimmedDescription
+                            }
+                            else
+                            {
+                                @item.description
+                            }
+
+                        </p>
+                        <a href="@Url.Action("Details", "User", new { id = item.Id })" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+
+    </div>
+</div>
